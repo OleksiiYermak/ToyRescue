@@ -11,9 +11,9 @@ namespace ToyRescue.Activities
         [SerializeField] private bool matchParentRotationOnArrival;
 
         private Transform initialParent;
-        private Vector3 initialPosition;
-        private Quaternion initialRotation;
-        private Vector3 initialScale;
+        private Vector3 initialLocalPosition;
+        private Quaternion initialLocalRotation;
+        private Vector3 initialLocalScale;
         private Coroutine moveRoutine;
 
         private void Awake()
@@ -39,19 +39,19 @@ namespace ToyRescue.Activities
                 moveRoutine = null;
             }
 
-            transform.SetParent(initialParent, true);
-            transform.position = initialPosition;
-            transform.rotation = initialRotation;
-            transform.localScale = initialScale;
+            transform.SetParent(initialParent, false);
+            transform.localPosition = initialLocalPosition;
+            transform.localRotation = initialLocalRotation;
+            transform.localScale = initialLocalScale;
             gameObject.SetActive(true);
         }
 
         private void CaptureInitialPose()
         {
             initialParent = transform.parent;
-            initialPosition = transform.position;
-            initialRotation = transform.rotation;
-            initialScale = transform.localScale;
+            initialLocalPosition = transform.localPosition;
+            initialLocalRotation = transform.localRotation;
+            initialLocalScale = transform.localScale;
         }
 
         private IEnumerator MoveRoutine(Vector3 worldDestination, Transform parentAfterMove)

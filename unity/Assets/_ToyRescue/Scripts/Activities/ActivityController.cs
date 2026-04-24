@@ -123,10 +123,15 @@ namespace ToyRescue.Activities
                 eventBus?.Publish(new TimerTickEvent(activityDefinition.DurationSeconds));
             }
 
-            if (transitionToPreGameInstructionOnStart)
+            if (ShouldTransitionToPreGameInstructionOnConfigure())
             {
                 stateMachine?.TransitionTo(GameState.PreGameInstruction);
             }
+        }
+
+        private bool ShouldTransitionToPreGameInstructionOnConfigure()
+        {
+            return transitionToPreGameInstructionOnStart && !beginActivityOnStart;
         }
 
         private void HandleToySelected(ToyInteractable toy)
