@@ -19,6 +19,7 @@ namespace ToyRescue.Core
         public ServiceRegistry Services { get; private set; }
         public EventBus EventBus { get; private set; }
         public GameStateMachine StateMachine { get; private set; }
+        public bool IsInitialized => Services != null;
 
         private void Awake()
         {
@@ -35,7 +36,7 @@ namespace ToyRescue.Core
                 return;
             }
 
-            Initialize();
+            EnsureInitialized();
         }
         
         private void OnDestroy()
@@ -51,13 +52,26 @@ namespace ToyRescue.Core
             }
         }
 
-        public void Initialize()
+        public void EnsureInitialized()
         {
-            if (Services != null)
+            if (instance != null && instance != this)
+            {
+                instance.EnsureInitialized();
+                return;
+            }
+
+            instance ??= this;
+
+            if (IsInitialized)
             {
                 return;
             }
 
+            InitializeServices();
+        }
+
+        private void InitializeServices()
+        {
             if (dontDestroyOnLoad)
             {
                 DontDestroyOnLoad(gameObject);
