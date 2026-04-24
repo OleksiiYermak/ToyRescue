@@ -124,6 +124,29 @@ namespace ToyRescue.Core
         public string ActivityId { get; }
     }
 
+    public readonly struct ActivityConfiguredEvent
+    {
+        public ActivityConfiguredEvent(
+            string activityId,
+            string tutorialText,
+            int targetCount,
+            float durationSeconds,
+            int collectedCount)
+        {
+            ActivityId = activityId;
+            TutorialText = tutorialText;
+            TargetCount = targetCount;
+            DurationSeconds = durationSeconds;
+            CollectedCount = collectedCount;
+        }
+
+        public string ActivityId { get; }
+        public string TutorialText { get; }
+        public int TargetCount { get; }
+        public float DurationSeconds { get; }
+        public int CollectedCount { get; }
+    }
+
     public readonly struct ToySelectedEvent
     {
         public ToySelectedEvent(string toyId, string category)
