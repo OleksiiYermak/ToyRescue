@@ -48,14 +48,13 @@ namespace ToyRescue.Activities
 
         private void OnEnable()
         {
+            toyRegistry?.EnsureToysRegistered();
             SubscribeToToys();
             SubscribeToTimer();
         }
 
         private void Start()
         {
-            SubscribeToToys();
-            SubscribeToTimer();
             ConfigureActivity();
 
             if (beginActivityOnStart)
@@ -104,6 +103,7 @@ namespace ToyRescue.Activities
             hasEnded = false;
             progressModel = new ActivityProgressModel(activityDefinition.TargetCount);
 
+            toyRegistry?.EnsureToysRegistered();
             toyRegistry?.ResetToys();
             basketCollector?.ResetCollector();
 

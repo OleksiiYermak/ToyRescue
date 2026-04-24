@@ -128,20 +128,20 @@ namespace ToyRescue.Core
     {
         public ActivityConfiguredEvent(
             string activityId,
-            string objectiveText,
+            string tutorialText,
             int targetCount,
             float durationSeconds,
             int collectedCount)
         {
             ActivityId = activityId;
-            ObjectiveText = objectiveText;
+            TutorialText = tutorialText;
             TargetCount = targetCount;
             DurationSeconds = durationSeconds;
             CollectedCount = collectedCount;
         }
 
         public string ActivityId { get; }
-        public string ObjectiveText { get; }
+        public string TutorialText { get; }
         public int TargetCount { get; }
         public float DurationSeconds { get; }
         public int CollectedCount { get; }

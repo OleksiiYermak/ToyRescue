@@ -11,6 +11,7 @@ namespace ToyRescue.Activities
 
         public float DurationSeconds { get; private set; }
         public float RemainingSeconds { get; private set; }
+        public int DisplayedSeconds => Math.Max(0, (int)Math.Ceiling(RemainingSeconds));
         public bool IsRunning { get; private set; }
         public bool IsComplete => RemainingSeconds <= 0f;
 

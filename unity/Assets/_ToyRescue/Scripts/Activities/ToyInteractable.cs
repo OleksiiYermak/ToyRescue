@@ -11,6 +11,7 @@ namespace ToyRescue.Activities
         [SerializeField] private ToyDefinition toyDefinition;
         [SerializeField] private string toyIdOverride;
         [SerializeField] private string categoryOverride;
+        [SerializeField] private bool useCountsAsTargetOverride;
         [SerializeField] private bool countsAsTargetOverride = true;
 
         private Collider[] cachedColliders;
@@ -33,7 +34,9 @@ namespace ToyRescue.Activities
             : toyDefinition != null
                 ? toyDefinition.Category
                 : string.Empty;
-        public bool CountsAsTarget => toyDefinition != null ? toyDefinition.CountsAsTarget : countsAsTargetOverride;
+        public bool CountsAsTarget => useCountsAsTargetOverride || toyDefinition == null
+            ? countsAsTargetOverride
+            : toyDefinition.CountsAsTarget;
 
         private void Awake()
         {

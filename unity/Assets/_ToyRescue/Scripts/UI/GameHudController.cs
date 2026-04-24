@@ -39,7 +39,7 @@ namespace ToyRescue.UI
         {
             if (objectiveText != null)
             {
-                objectiveText.text = eventData.ObjectiveText;
+                objectiveText.text = eventData.TutorialText;
             }
 
             if (progressText != null)

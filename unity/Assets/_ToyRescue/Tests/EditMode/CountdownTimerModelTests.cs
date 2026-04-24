@@ -32,5 +32,21 @@ namespace ToyRescue.Tests
             Assert.IsFalse(model.IsRunning);
             Assert.IsTrue(model.IsComplete);
         }
+
+        [Test]
+        public void DisplayedSecondsRoundUpUntilTimerCompletes()
+        {
+            var model = new CountdownTimerModel(2.2f);
+            model.Start();
+
+            model.Tick(0.3f);
+            Assert.AreEqual(2, model.DisplayedSeconds);
+
+            model.Tick(0.95f);
+            Assert.AreEqual(1, model.DisplayedSeconds);
+
+            model.Tick(5f);
+            Assert.AreEqual(0, model.DisplayedSeconds);
+        }
     }
 }

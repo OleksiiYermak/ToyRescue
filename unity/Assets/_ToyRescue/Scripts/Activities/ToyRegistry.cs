@@ -13,10 +13,7 @@ namespace ToyRescue.Activities
 
         private void Awake()
         {
-            if (autoRefreshFromChildrenOnAwake)
-            {
-                RefreshFromChildren();
-            }
+            EnsureToysRegistered();
         }
 
         [ContextMenu("Refresh From Children")]
@@ -34,8 +31,18 @@ namespace ToyRescue.Activities
             }
         }
 
+        public void EnsureToysRegistered()
+        {
+            if (toys.Count == 0 && autoRefreshFromChildrenOnAwake)
+            {
+                RefreshFromChildren();
+            }
+        }
+
         public void ResetToys()
         {
+            EnsureToysRegistered();
+
             for (int i = 0; i < toys.Count; i++)
             {
                 toys[i]?.ResetToy();

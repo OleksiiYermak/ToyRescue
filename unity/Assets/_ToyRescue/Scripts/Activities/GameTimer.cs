@@ -6,6 +6,7 @@ namespace ToyRescue.Activities
     public sealed class GameTimer : MonoBehaviour
     {
         private readonly CountdownTimerModel timerModel = new CountdownTimerModel();
+        private int lastPublishedDisplayedSeconds = -1;
 
         public event Action<float> TimeChanged;
         public event Action Completed;
@@ -17,7 +18,7 @@ namespace ToyRescue.Activities
         public void ResetTimer(float durationSeconds)
         {
             timerModel.Reset(durationSeconds);
-            TimeChanged?.Invoke(timerModel.RemainingSeconds);
+            PublishTimeChanged(force: true);
         }
 
         public void StartTimer()
@@ -29,7 +30,7 @@ namespace ToyRescue.Activities
         {
             timerModel.Reset(durationSeconds);
             timerModel.Start();
-            TimeChanged?.Invoke(timerModel.RemainingSeconds);
+            PublishTimeChanged(force: true);
         }
 
         public void StopTimer()
@@ -44,11 +45,23 @@ namespace ToyRescue.Activities
                 return;
             }
 
-            TimeChanged?.Invoke(timerModel.RemainingSeconds);
+            PublishTimeChanged();
             if (timerModel.IsComplete)
             {
                 Completed?.Invoke();
             }
+        }
+
+        private void PublishTimeChanged(bool force = false)
+        {
+            int displayedSeconds = timerModel.DisplayedSeconds;
+            if (!force && displayedSeconds == lastPublishedDisplayedSeconds)
+            {
+                return;
+            }
+
+            lastPublishedDisplayedSeconds = displayedSeconds;
+            TimeChanged?.Invoke(timerModel.RemainingSeconds);
         }
 
         private void Update()
